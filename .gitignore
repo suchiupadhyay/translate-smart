@@ -9,6 +9,9 @@ translation_task_new/
 .venv/
 venv/
 
+## temp files
+backend/temp/
+
 # Streamlit cache and config
 .streamlit/
 

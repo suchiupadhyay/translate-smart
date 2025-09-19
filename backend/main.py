@@ -4,7 +4,6 @@ import shutil
 import os
 import uuid
 from translator import extract_text_from_pdf, translate_to_hindi, translate_to_gujarati
-import fitz
 import tempfile
 
 

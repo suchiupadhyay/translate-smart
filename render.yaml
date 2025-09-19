@@ -3,5 +3,6 @@ services:
     name: fastapi-backend
     env: python
     plan: free
+    workingDir: backend
     buildCommand: pip install -r requirements.txt
-    startCommand: uvicorn backend.main:app --host=0.0.0.0 --port=${PORT}
+    startCommand: uvicorn main:app --host=0.0.0.0 --port=${PORT}

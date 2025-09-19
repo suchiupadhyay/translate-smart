@@ -3,7 +3,7 @@ from fastapi.responses import FileResponse
 import shutil
 import os
 import uuid
-from backend.translator import extract_text_from_pdf, translate_to_hindi, translate_to_gujarati
+from translator import extract_text_from_pdf, translate_to_hindi, translate_to_gujarati
 import fitz
 import tempfile
 

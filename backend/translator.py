@@ -1,7 +1,7 @@
 # translate.py
 import os
 from dotenv import load_dotenv
-import streamlit as st
+#import streamlit as st
 
 import google.generativeai as genai
 from pdf2image import convert_from_path

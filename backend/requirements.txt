@@ -1,4 +1,6 @@
 fastapi
 uvicorn
 python-multipart
-python-dotenv  
+python-dotenv
+google-generativeai
+pdf2image  

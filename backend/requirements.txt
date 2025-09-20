@@ -1,6 +1,6 @@
-fastapi
-uvicorn
-python-multipart
-python-dotenv
-google-generativeai
-pdf2image  
+fastapi==0.116.2 ## Web framework for building APIs with Python
+uvicorn==0.35.0  ## ASGI server for serving FastAPI apps, used to run the FastAPI server
+python-multipart==0.0.20  ## fastapi to expect Form data ....this dependency required
+python-dotenv==0.21.0  ## Loads environment variables from a `.env` file into Python
+google-generativeai==0.5.1 ## Google's Generative AI client for accessing models like Gemini – used for AI-based tasks
+pdf2image==1.16.3  ## Converts PDF pages to PIL images using poppler – useful for PDF processing or rendering

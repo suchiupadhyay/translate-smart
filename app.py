@@ -20,6 +20,7 @@ if uploaded_pdf is not None:
     target_language = st.selectbox("Select Target Language", ["Hindi", "Gujarati"])
 
     if st.button(f"Translate to {target_language}"):
+        st.write("Starting translation request...")
         with st.spinner("Extracting text from PDF..."):
             ## Save uploaded file to temp
             with tempfile.NamedTemporaryFile(delete=False, suffix=".pdf") as tmp_file:
@@ -32,7 +33,9 @@ if uploaded_pdf is not None:
                     files = {"file": (uploaded_pdf.name, f, "application/pdf")}
                     data = {"lang": target_language.lower()}
                     response = requests.post(f"{BACKEND_URL}/translate-pdf", files=files, data=data)  # specified timeout=30 also but then get timeout error during processing from streamlit UI to fastapi on render so finally remove timeout attribute.  
-        
+                    
+                st.write(f"Response status code: {response.status_code}")
+                    
                 if response.status_code == 200:
                     st.success("✅ Translation complete!")
                     st.download_button(

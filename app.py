@@ -9,14 +9,31 @@ import requests
 import logging
 import io
 
-# Setup in-memory log handler
+# In-memory buffer for UI display
 log_buffer = io.StringIO()
-handler = logging.StreamHandler(log_buffer)
+memory_handler = logging.StreamHandler(log_buffer)
 
-logging.basicConfig(level=logging.INFO, format="%(asctime)s [%(levelname)s] %(message)s",
-		handlers=[logging.FileHandler("app.log"),
-		        	logging.StreamHandler()
-    		])
+# File handler for persistent logs
+file_handler = logging.FileHandler("app.log")
+
+# Console handler for Codespaces terminal
+console_handler = logging.StreamHandler()
+
+# Clear any existing handlers (avoid duplicates if Streamlit reruns)
+root_logger = logging.getLogger()
+if root_logger.hasHandlers():
+    root_logger.handlers.clear()
+
+# Configure all handlers
+logging.basicConfig(
+    level=logging.INFO,
+    format="%(asctime)s [%(levelname)s] %(message)s",
+    handlers=[
+        memory_handler,    #  for UI
+        file_handler,      #  for file
+        console_handler    #  for terminal
+    ]
+)
 
 # Log something
 logging.info("Streamlit app started")
@@ -63,11 +80,6 @@ if uploaded_pdf is not None:
                 )
                 else:
                     st.error(f"❌ Translation failed: {response.status_code}\n{response.text}")
-
-                # Show logs in a collapsible panel
-                with st.expander("🔍 View Logs"):
-                    log_contents = log_buffer.getvalue()
-                    st.text(log_contents)
             
             except requests.exceptions.Timeout:
                 st.error("Request timed out. Please try again later.")

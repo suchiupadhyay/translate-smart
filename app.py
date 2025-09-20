@@ -60,13 +60,14 @@ if uploaded_pdf is not None:
             with tempfile.NamedTemporaryFile(delete=False, suffix=".pdf") as tmp_file:
                 tmp_file.write(uploaded_pdf.read())
                 tmp_path = tmp_file.name
-
+                
             try:
 
                 with open(tmp_path, "rb") as f:
                     files = {"file": (uploaded_pdf.name, f, "application/pdf")}
                     data = {"lang": target_language.lower()}
                     response = requests.post(f"{BACKEND_URL}/translate-pdf", files=files, data=data)  # specified timeout=30 also but then get timeout error during processing from streamlit UI to fastapi on render so finally remove timeout attribute.  
+                    logging.info(f"📤 Sending request to FastAPI: {BACKEND_URL} | Body: {response.text}")
                     
                 st.write(f"Response status code: {response.status_code}")
                     
@@ -84,6 +85,7 @@ if uploaded_pdf is not None:
             except requests.exceptions.Timeout:
                 st.error("Request timed out. Please try again later.")
             except Exception as e:
+                logging.exception("❌ Exception while calling FastAPI")
                 st.error(f"⚠️ Error contacting backend: {e}")
 
 

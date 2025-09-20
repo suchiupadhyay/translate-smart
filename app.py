@@ -5,6 +5,23 @@ import streamlit as st
 import tempfile
 import requests
 
+## adding Logging
+import logging
+import io
+
+# Setup in-memory log handler
+log_buffer = io.StringIO()
+handler = logging.StreamHandler(log_buffer)
+
+logging.basicConfig(level=logging.INFO, format="%(asctime)s [%(levelname)s] %(message)s",
+		handlers=[logging.FileHandler("app.log"),
+		        	logging.StreamHandler()
+    		])
+
+# Log something
+logging.info("Streamlit app started")
+
+
 # fastapi backend URL
 BACKEND_URL = "https://translate-smart.onrender.com"
 

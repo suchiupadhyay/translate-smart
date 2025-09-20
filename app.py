@@ -64,6 +64,11 @@ if uploaded_pdf is not None:
                 else:
                     st.error(f"❌ Translation failed: {response.status_code}\n{response.text}")
 
+                # Show logs in a collapsible panel
+                with st.expander("🔍 View Logs"):
+                    log_contents = log_buffer.getvalue()
+                    st.text(log_contents)
+            
             except requests.exceptions.Timeout:
                 st.error("Request timed out. Please try again later.")
             except Exception as e:

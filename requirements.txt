@@ -1,9 +1,2 @@
-streamlit==1.15.2
-altair<5
-google-generativeai==0.5.1
-pdf2image==1.16.3
-python-dotenv==0.21.0
-fastapi
-uvicorn
-pymupdf
-python-multipart ## fastapi to expect Form data ....this dependency required
+streamlit==1.15.2  # UI framework
+requests==2.32.3   # For sending API requests to your backend

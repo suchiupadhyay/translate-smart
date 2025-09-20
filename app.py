@@ -5,6 +5,9 @@ import streamlit as st
 import tempfile
 import requests
 
+# fastapi backend URL
+BACKEND_URL = "https://translate-smart.onrender.com"
+
 # Streamlit UI setup
 st.title("Scanned PDF Translator")
 st.markdown("Upload a scanned PDF, extract text, and translate it to Hindi or Gujarati.")
@@ -23,20 +26,26 @@ if uploaded_pdf is not None:
                 tmp_file.write(uploaded_pdf.read())
                 tmp_path = tmp_file.name
 
-            with open(tmp_path, "rb") as f:
-                files = {"file": (uploaded_pdf.name, f, "application/pdf")}
-                data = {"lang": target_language.lower()}
-                response = requests.post("http://localhost:8000/translate-pdf/", files=files, data=data)    
+            try:
+
+                with open(tmp_path, "rb") as f:
+                    files = {"file": (uploaded_pdf.name, f, "application/pdf")}
+                    data = {"lang": target_language.lower()}
+                    response = requests.post(f"{BACKEND_URL}/translate-pdf", files=files, data=data,timeout=30)    
         
-            if response.status_code == 200:
-                st.success("Translation complete!")
-                st.download_button(
-                    label=f"Download Translated Text file ({target_language})",
-                    data=response.content,
-                    file_name=f"translated_{target_language}.txt",
-                    mime="text/plain"
+                if response.status_code == 200:
+                    st.success("✅ Translation complete!")
+                    st.download_button(
+                        label=f"⬇️ Download Translated Text file ({target_language})",
+                        data=response.content,
+                        file_name=f"translated_{target_language}.txt",
+                        mime="text/plain"
                 )
-            else:
-                st.error(f"Translation failed: {response.text}")
+                else:
+                    st.error(f"❌ Translation failed: {response.status_code}\n{response.text}")
+
+            except Exception as e:
+                st.error(f"⚠️ Error contacting backend: {e}")
+
 
         

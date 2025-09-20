@@ -31,7 +31,7 @@ if uploaded_pdf is not None:
                 with open(tmp_path, "rb") as f:
                     files = {"file": (uploaded_pdf.name, f, "application/pdf")}
                     data = {"lang": target_language.lower()}
-                    response = requests.post(f"{BACKEND_URL}/translate-pdf", files=files, data=data,timeout=30)    
+                    response = requests.post(f"{BACKEND_URL}/translate-pdf", files=files, data=data)  # specified timeout=30 also but then get timeout error during processing from streamlit UI to fastapi on render so finally remove timeout attribute.  
         
                 if response.status_code == 200:
                     st.success("✅ Translation complete!")

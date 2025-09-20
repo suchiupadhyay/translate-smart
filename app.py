@@ -20,7 +20,7 @@ if uploaded_pdf is not None:
     target_language = st.selectbox("Select Target Language", ["Hindi", "Gujarati"])
 
     if st.button(f"Translate to {target_language}"):
-        st.write("Starting translation request...")
+        st.write("Starting translation request..written by me....")
         with st.spinner("Extracting text from PDF..."):
             ## Save uploaded file to temp
             with tempfile.NamedTemporaryFile(delete=False, suffix=".pdf") as tmp_file:
@@ -47,6 +47,8 @@ if uploaded_pdf is not None:
                 else:
                     st.error(f"❌ Translation failed: {response.status_code}\n{response.text}")
 
+            except requests.exceptions.Timeout:
+                st.error("Request timed out. Please try again later.")
             except Exception as e:
                 st.error(f"⚠️ Error contacting backend: {e}")
 

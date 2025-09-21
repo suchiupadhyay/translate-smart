@@ -9,6 +9,20 @@ import requests
 import logging
 import io
 
+## Verify User acess ##
+
+VALID_KEYS = st.secrets["APP_KEYS"].split(",")
+user_key = st.text_input("Enter your access key:", type="password")
+
+# Validate
+if user_key not in VALID_KEYS:
+    st.error("❌ Invalid key. Access denied.")
+    st.stop()  # stops the rest of the app
+
+ # If valid
+st.success("✅ Access granted! Welcome.")
+st.write("You can now use the app.")
+
 # In-memory buffer for UI display
 log_buffer = io.StringIO()
 memory_handler = logging.StreamHandler(log_buffer)
@@ -37,6 +51,7 @@ logging.basicConfig(
 
 # Log something
 logging.info("Streamlit app started")
+
 
 
 # fastapi backend URL

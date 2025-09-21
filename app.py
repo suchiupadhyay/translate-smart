@@ -91,6 +91,7 @@ if uploaded_pdf is not None:
                     st.error(f"❌ Translation failed: {response.status_code}\n{response.text}")
             
             except requests.exceptions.Timeout:
+                logging.error("Request timed out. Please try again later")
                 st.error("Request timed out. Please try again later.")
             except Exception as e:
                 logging.exception("❌ Exception while calling FastAPI")

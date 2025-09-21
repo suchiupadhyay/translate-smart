@@ -9,6 +9,20 @@ import requests
 import logging
 import io
 
+## Verify User acess ##
+
+VALID_KEYS = st.secrets["APP_KEYS"].split(",")
+user_key = st.text_input("Enter your access key:", type="password")
+
+# Validate # Only check if user entered something
+if user_key:
+    if user_key not in VALID_KEYS:
+        logging.error("Invalid key, access denied")
+        st.error("❌ Invalid key. Access denied.")
+        st.stop()  # stops the rest of the app
+    else:  # If valid
+        st.success("✅ Access granted! Welcome.")
+
 
 # In-memory buffer for UI display
 log_buffer = io.StringIO()
@@ -47,20 +61,6 @@ BACKEND_URL = "https://translate-smart.onrender.com"
 # Streamlit UI setup
 st.title("Scanned PDF Translator")
 st.markdown("Upload a scanned PDF, extract text, and translate it to Hindi or Gujarati.")
-
-## Verify User acess ##
-
-VALID_KEYS = st.secrets["APP_KEYS"].split(",")
-user_key = st.text_input("Enter your access key:", type="password")
-
-# Validate # Only check if user entered something
-if user_key:
-    if user_key not in VALID_KEYS:
-        logging.error("Invalid key, access denied")
-        st.error("❌ Invalid key. Access denied.")
-        st.stop()  # stops the rest of the app
-    else:  # If valid
-        st.success("✅ Access granted! Welcome.")
 
 
 # File uploader widget

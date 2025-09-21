@@ -53,15 +53,14 @@ st.markdown("Upload a scanned PDF, extract text, and translate it to Hindi or Gu
 VALID_KEYS = st.secrets["APP_KEYS"].split(",")
 user_key = st.text_input("Enter your access key:", type="password")
 
-# Validate
-if user_key not in VALID_KEYS:
-    st.error("❌ Invalid key. Access denied.")
-    logging.error("Invalid key, access denied")
-    st.stop()  # stops the rest of the app
-
- # If valid
-st.success("✅ Access granted! Welcome.")
-st.write("You can now use the app.")
+# Validate # Only check if user entered something
+if user_key:
+    if user_key not in VALID_KEYS:
+        logging.error("Invalid key, access denied")
+        st.error("❌ Invalid key. Access denied.")
+        st.stop()  # stops the rest of the app
+    else:  # If valid
+        st.success("✅ Access granted! Welcome.")
 
 
 # File uploader widget

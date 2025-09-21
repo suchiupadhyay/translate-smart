@@ -15,13 +15,13 @@ VALID_KEYS = st.secrets["APP_KEYS"].split(",")
 user_key = st.text_input("Enter your access key:", type="password")
 
 # Validate # Only check if user entered something
-if user_key:
-    if user_key not in VALID_KEYS:
-        logging.error("Invalid key, access denied")
-        st.error("❌ Invalid key. Access denied.")
-        st.stop()  # stops the rest of the app
-    else:  # If valid
-        st.success("✅ Access granted! Welcome.")
+
+if user_key not in VALID_KEYS:
+    st.error("❌ Invalid key. Access denied.")
+    st.stop()  # stops the rest of the app
+else:  # If valid
+    st.success("✅ Access granted! Welcome.")
+    st.write("You can now use the app.")
 
 
 # In-memory buffer for UI display

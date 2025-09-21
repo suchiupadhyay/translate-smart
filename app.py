@@ -51,6 +51,13 @@ uploaded_pdf = st.file_uploader("Upload PDF", type="pdf")
 
 # Handling the uploaded PDF
 if uploaded_pdf is not None:
+
+    file_size_mb = uploaded_pdf.size / (1024 * 1024)  # convert bytes → MB
+    if file_size_mb > 500:
+        logging.error(f"File too large: {uploaded_pdf.name}, size={file_size_mb:.2f} MB")
+        st.error("❌ File too large! Please upload a file smaller than 500 MB.")
+        st.stop()
+
     target_language = st.selectbox("Select Target Language", ["Hindi", "Gujarati"])
 
     if st.button(f"Translate to {target_language}"):
@@ -80,6 +87,7 @@ if uploaded_pdf is not None:
                         mime="text/plain"
                 )
                 else:
+                    logging.error(f"Translation failed: {response.status_code}\n {response.text}")
                     st.error(f"❌ Translation failed: {response.status_code}\n{response.text}")
             
             except requests.exceptions.Timeout:

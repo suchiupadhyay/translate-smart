@@ -36,7 +36,7 @@ async def translate_pdf(file: UploadFile = File(...),lang: str = Form(...)):
     for page_text in extracted_text_pages:
         try:
             if lang == "hindi":
-                translated = translate_to_hindi(page_text)
+                translated = translate_to_hindi_from_Gujarati(page_text)
             elif lang == "gujarati":
                 translated = translate_to_gujarati(page_text)
             else:

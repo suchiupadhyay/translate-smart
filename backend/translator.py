@@ -49,3 +49,10 @@ def translate_to_gujarati(english_text):
     prompt_gujarati = "Please translate the following text into Gujarati:"
     gujarati_response = model.generate_content([prompt_gujarati, english_text])
     return gujarati_response.text
+
+
+# Function for translating text from Gujarati to Hindi
+def translate_to_hindi_from_Gujarati(gujarati_text):
+    prompt_hindi = "Please translate the following text into Hindi:"
+    hindi_response = model.generate_content([prompt_hindi, gujarati_text])
+    return hindi_response.text
